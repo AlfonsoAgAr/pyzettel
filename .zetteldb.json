@@ -1,0 +1,19 @@
+[
+    {
+      "file_name": "Bash_find_via_regex[[202204302315]]",
+      "uid": "202204302315",
+      "title": "Bash find via regex",
+      "tags": [
+          "bash", 
+          "script", 
+          "regex"
+      ],
+      "origin": null,
+      "origin_title": null,
+      "child": null,
+      "createdAt": "2022-04-30 23:15:41.431236"
+    }
+]
+
+// Si un item de la db no tiene elementos padres, y después se le asigna 
+// a través de un script, se debería updatear los valores

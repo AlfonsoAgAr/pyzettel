@@ -1,6 +1,6 @@
 import json
 
-PATH = "./../../"
+PATH = "~/"
 
 
 class NotesHandler:

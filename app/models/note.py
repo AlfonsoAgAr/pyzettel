@@ -8,20 +8,27 @@ class Note:
         self.tags: list[str]
         self.origin: str
         self.origin_title: str
+        self.child: str
         self.createdAt: str
 
         if self.__new__:
             self.uid = self.setUid()
-            self.createdAt = datetime.datetime.now()
+            self.createdAt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     def __repr__(self) -> str:
-        return f'<Note [[{self.uid}]]>'
+        return f'<{self.title} [[{self.uid}]]>'
     
     def setUid(self) -> str:
         uid =  datetime.datetime.now()
         uid =  str(uid).replace('-', '').replace(':', '').replace(' ', '')
 
         return uid[:12]
+    
+    def setFilename(self) -> str:
+        title = self.title.replace(' ', '_').lower()
+        title += f'_[{self.uid}].md'
+
+        return title
 
     @staticmethod
     def getUid(self) -> str:
@@ -31,7 +38,6 @@ class Note:
         Note().getUid({note_created})
         """
         return self.uid
-
 
     @classmethod
     def setAttributes(self, **kwargs) -> None:
