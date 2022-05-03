@@ -17,13 +17,13 @@ class Note:
 
     def __repr__(self) -> str:
         return f'<{self.title} [[{self.uid}]]>'
-    
+
     def setUid(self) -> str:
         uid =  datetime.datetime.now()
         uid =  str(uid).replace('-', '').replace(':', '').replace(' ', '')
 
         return uid[:12]
-    
+
     def setFilename(self) -> str:
         title = self.title.replace(' ', '_').lower()
         title += f'_[{self.uid}].md'
@@ -33,7 +33,7 @@ class Note:
     @staticmethod
     def getUid(self) -> str:
         """
-        Simple method to get the uid of a created class. 
+        Simple method to get the uid of a created class.
 
         Note().getUid({note_created})
         """
