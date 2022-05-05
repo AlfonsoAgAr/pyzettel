@@ -3,7 +3,7 @@ import json
 PATH = "~/"
 
 
-class NotesHandler:
+class DataBase:
     def __init__(self) -> None:
         pass
 

@@ -4,8 +4,7 @@ import os
 filepath = os.path.expanduser('~')
 
 class PathHandler:
-    def __init__(self) -> None:
-        self.__new__
+    def __init__(self) -> None: ...
 
     @classmethod
     def create_path(self) -> str:
@@ -22,9 +21,8 @@ class PathHandler:
             return self.create_path()
 
 class FileHandler(PathHandler):
-    def __init__(self, PathHandler):
-        self.__new__
-        PathHandler.__init__
+    def __init__(self) -> None:
+        super().__init__()
 
     @classmethod
     def verify_filename(self, filename) -> bool:
@@ -58,10 +56,7 @@ class FileHandler(PathHandler):
             return e
 
 
-# noteLocal = Note()
 
-# test = FileHandler.verify_path()
-# print(test)
-
-
-# print(FileHandler.delete_file('1.txt'))
+test = FileHandler.verify_path()
+print(test)
+print(FileHandler.delete_file('1.txt'))

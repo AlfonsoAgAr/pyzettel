@@ -1,3 +1,4 @@
+from markdownSyntax import MarkdownSyntax as MD
 import datetime
 
 class Note:
@@ -10,6 +11,8 @@ class Note:
         self.origin_title: str
         self.child: str
         self.createdAt: str
+        self.content: str
+        self.references: str
 
         if self.__new__:
             self.uid = self.setUid()
@@ -55,3 +58,27 @@ class Note:
         for i in kwargs.keys():
             if i in _ATTRIBUTES:
                 setattr(self, i, kwargs[i])
+
+class MarkdwonNote(Note, MD):
+    def __init__(self) -> None:
+        super().__init__()
+        self.title = 'Markdown Note'
+
+    def h1(self, text_to: str) -> str: return f'# {text_to}\n'.format(text_to)
+    def h2(self, text_to: str) -> str: return f'## {text_to}\n'.format(text_to)
+    def h3(self, text_to: str) -> str: return f'### {text_to}\n'.format(text_to)
+    def bold(self, text_to: str) -> str: return f'**{text_to}**' + ' '
+    def italic(self, text_to: str) -> str: return f'*{text_to}*' + ' '
+    def quote(self, text_to: str) -> str: return f'>{text_to}\n'
+    def code(self, text_to: str) -> str: return f'```\n{text_to}\n```'
+    def h_rule(self, text_to: str) -> str: return f'---\n{text_to}\n---'
+    def link(self, text_to: str, link_to: str) -> str: return f'[{text_to}]({link_to})'
+
+    def __repr__(self) -> str:
+        return self.bold(f'<{self.title} [[{self.uid}]]>') + 'and more'
+
+test = MarkdwonNote()
+
+print(test.uid)
+print(test)
+
