@@ -1,4 +1,3 @@
-from note import Note
 import os
 
 filepath = os.path.expanduser('~')
@@ -24,25 +23,27 @@ class FileHandler(PathHandler):
     def __init__(self) -> None:
         super().__init__()
 
-    @classmethod
-    def verify_filename(self, filename) -> bool:
-        if os.path.exists(self.verify_path() + f'{filename}'):
+    @staticmethod
+    def verify_filename(filename) -> bool:
+        if os.path.exists(FileHandler.verify_path() + f'{filename}'):
             return True
         else:
             return False
 
-    @classmethod
-    def temp_file(self) -> str:
-        # este metodo debe devolver un archivo temporal para visualizar
-        # si el archivo es correcto, debe escribirse a un archivo real
-        # con el metodo make_file
-        ...
+    @staticmethod
+    def make_file(filename, texto_markdown) -> str:
+        try:
+            if FileHandler.verify_filename(f'{filename}'):
+                return 'This file already exists.'
+            else:
+                with open(FileHandler.verify_path() + f'{filename}', 'w') as file:
+                    file.write(texto_markdown)
+                return f'Markdown {filename} created.'
+        except OSError as e:
+            return e
 
-    @classmethod
-    def make_file(self, **kwargs) -> str:
-        # este metodo escribe el archivo markdown en la carpeta ~/.zettel/
-        # despues lo indexa a .zetteldb.json
-        ...
+    @staticmethod
+    def edit_file(filename, texto_markdown) -> str: ...
 
     @staticmethod
     def delete_file(filename) -> str:
@@ -51,12 +52,6 @@ class FileHandler(PathHandler):
                 os.remove(FileHandler.verify_path() + f'{filename}')
                 return 'File removed suscesfully.'
             else:
-                raise OSError(f'File Exception: {filename} not found.')
+                raise FileNotFoundError(f'File Exception: {filename} not found.')
         except OSError as e:
             return e
-
-
-
-test = FileHandler.verify_path()
-print(test)
-print(FileHandler.delete_file('1.txt'))

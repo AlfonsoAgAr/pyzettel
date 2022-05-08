@@ -1,11 +1,28 @@
-from app import *
+from src import MarkdownNote
 
-test = Note()
-setattr(test, 'title', 'Bash find regex')
-print('Función getUid:\n',Note().getUid(test))
-test.setAttributes(tags=['#hola', '#mundo'], origin=737219132)
-print('Representación de la clase:\n',test)
-print('Created at:\n',test.createdAt)
-print('Origin:\n',test.tags)
-print('Origin:\n',test.origin)
-print('Filename:\n',test.setFilename())
+data = {
+    'title': '',
+    'tags': ['bash', 'python', 'html']
+    }
+
+data['title'] = 'asdasdas'
+
+test = MarkdownNote()
+test.set_attributes(**data)
+
+print(test)
+
+#   TODO:
+
+# Escribir el test.create_markdown() en un archivo markdown. Los tags deberian verificar si existe un markdown padre.
+# Para este ejemplo, deberían existir los archivos Python.md, Bash.md y Html.md.
+
+# En cada archivo de ellos debería escribir lo siguiente:
+
+#     Recursive python script over html files for get data with bash. [202205060425](routa_para_recursive_..._202205060425)
+
+# De esta manera, automaticamente deberían irse llenando los archivos principales.
+# Si existe el archivo padre (Python.md), escibre sobre él. Si no existe, lo crea y escribe.
+# Escribir una función para actualizar los archivos padres, es decir, si agrego más tags, debería llamar una función push que actualice los archivos padres.
+# También se debe actualizar la base de datos.
+# También se deben enviar a un repositorio git.
