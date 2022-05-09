@@ -1,4 +1,4 @@
-import os
+import os, re, itertools
 
 filepath = os.path.expanduser('~')
 
@@ -43,7 +43,80 @@ class FileHandler(PathHandler):
             return e
 
     @staticmethod
-    def edit_file(filename, texto_markdown) -> str: ...
+    def add_parent(filename) -> str:
+        parents = []
+        try:
+            # Reading the tags inside the file.
+            with open(FileHandler.verify_path() + f'{filename}', 'r+') as file:
+                for i in file.read().splitlines():
+                    if 'Tags:' in i:
+                        raw = re.split('\[(.*?)\]', i)
+                        parents = [i.replace('#', '') for i in raw if i.startswith('#')]
+            # Adding the parent to the file.
+            for parent in parents:
+                title_parent = parent.capitalize()+'.md'
+                FileHandler.make_file(title_parent, '')
+                with open(FileHandler.verify_path() + f'{title_parent}', 'r+') as file:
+                    content = file.read()
+                    if content.find(filename) != -1:
+                        return f'{title_parent} already has {filename}'
+                    else:
+                        file.write(f'{filename} ()\n')
+                        return f'{filename} was added successfully to {title_parent}'
+        except OSError as e:
+            return e
+
+    @staticmethod
+    def delete_parent() -> None:
+        files = os.listdir(FileHandler.verify_path())
+        parents_files = itertools.filterfalse(lambda x: x[:1].islower(), files)
+        parents_files = [i for i in parents_files]
+        k = 0
+        
+        for parent in parents_files:
+            files_asociated = []
+            with open(FileHandler.verify_path() + f'{parent}', 'r') as file:
+                for i in file.read().splitlines():
+                    if i.find('.md') != -1:
+                        files_asociated.append(i[:i.find('.md')+3])
+            
+            for file in files_asociated:
+                parents_in_file = []
+                try:
+                    with open(FileHandler.verify_path() + f'{file}', 'r+') as f:
+                        for i in f.read().splitlines():
+                            if 'Tags:' in i:
+                                raw = re.split('\[(.*?)\]', i)
+                                parents_in_file=[i.replace('#', '') for i in raw if i.startswith('#')]
+                    # print(f'     Parents on file: [{file}] has the follow tags ----> {parents_in_file}') # DEBUG
+                    if parent.replace('.md', '').lower() not in parents_in_file:
+                        with open(FileHandler.verify_path() + f'{parent}', 'r+') as fr:
+                            lines_to_write = fr.readlines()
+                            line_to_delete = [i for i in lines_to_write if i.startswith(file)]
+                            fr.seek(0)
+                            fr.truncate()
+                            for current_line in lines_to_write:
+                                if current_line != line_to_delete[0]:
+                                    fr.write(current_line)
+                                else:
+                                    k += 1
+                                    print(f'          [{file}] was deleted from {parent}')
+                except OSError as e:
+                    print('An exception ocurred ----->',e)
+
+        print(f'\n\nPushed elements, {k} tags were removed in the process.')
+
+
+    @staticmethod
+    def push_changes() -> str:
+        """
+        This method should push the changes from the files to the parents files.
+        """
+        files = os.listdir(FileHandler.verify_path())
+        notes_file = itertools.filterfalse(lambda x: x[:1].isupper(), files) # Check if a file is a parent or is a note. Parents are capilalized strings. 
+        notes_file = [FileHandler.add_parent(filename) for filename in notes_file] # Convert the itertools.filterfalse object to a redable list.
+        FileHandler.delete_parent() # Delete the parents that are not used anymore.
+        return 'Push message:\n' + '\n'.join(notes_file)
 
     @staticmethod
     def delete_file(filename) -> str:
@@ -55,3 +128,8 @@ class FileHandler(PathHandler):
                 raise FileNotFoundError(f'File Exception: {filename} not found.')
         except OSError as e:
             return e
+
+# FileHandler.add_parent('counting_numbers_of_files_on_directory_202205082119.md')
+# print(FileHandler.push_changes())
+# FileHandler.push_changes()
+

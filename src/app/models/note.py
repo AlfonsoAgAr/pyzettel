@@ -19,18 +19,19 @@ class Note:
 
     def __repr__(self) -> str:
         return f'<{self.title} [[{self.uid}]]>'
+    
+    @property
+    def filename(self) -> str:
+        title = self.title.replace(' ', '_').replace('.','').lower()
+        title += f'_{self.uid}.md'
+        self.file_name = title
+        return self.file_name
 
     def setUid(self) -> str:
         uid =  datetime.datetime.now()
         uid =  str(uid).replace('-', '').replace(':', '').replace(' ', '')
 
         return uid[:12]
-
-    def set_filename(self) -> str:
-        title = self.title.replace(' ', '_').replace('.','').lower()
-        title += f'_{self.uid}.md'
-
-        return title
 
     @staticmethod
     def getUid(self) -> str:

@@ -25,7 +25,7 @@ class FilesTest(unittest.TestCase):
     def test_delete_file(self) -> bool:
         # Delete the markdown created above.
         FileHandler.delete_file('202205080210.md')
-        # Verifies that the file created above was deleted.
+        # Verifies that the file created above was deleted. 
         self.assertEqual(FileHandler.verify_filename('202205080210.md'), False)
 
 if __name__ == '__main__':
