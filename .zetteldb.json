@@ -1,37 +1,78 @@
-[
+{
+"Bash":
   {
-  "Bash":
+  "202204302315":
+    { 
+      "file_name": "Bash_find_via_regex[[202204302315]]",
+      "uid": "202204302315",
+      "title": "Bash find via regex",
+      "tags": 
+        [
+        "bash", 
+        "script", 
+        "regex"
+        ],
+      "origin": "Bash",
+      "origin_title": "Bash",
+      "createdAt": "2022-04-30 23:15:41.431236",
+      "content": "All the content of the file",
+      "references": ["link_to", "link_to_2", "etc"],
+      "filepath": "~/.zettel/Bash_find_via_regex[[202204302315]].md"
+    },
+  "202204304444":
     {
-    "202204302315":
-      { 
-        "file_name": "Bash_find_via_regex[[202204302315]]",
-        "uid": "202204302315",
-        "title": "Bash find via regex",
-        "tags": 
-          [
-          "bash", 
-          "script", 
-          "regex"
-          ],
-        "origin": "Bash",
-        "origin_title": "Bash",
-        "createdAt": "2022-04-30 23:15:41.431236"
-      },
-    "202204304444":
-      {
-        "file_name": "Item 2[[202204304444]]",
-        "uid": "202204304444",
-        "title": "Item 2",
-        "tags": 
-          [
-          "bash", 
-          "script", 
-          "regex"
-          ],
-        "origin": null,
-        "origin_title": null,
-        "createdAt": "2022-04-30 23:15:41.431236"
-      }
+      "file_name": "Item 2[[202204304444]]",
+      "uid": "202204304444",
+      "title": "Item 2",
+      "tags": 
+        [
+        "bash", 
+        "script", 
+        "regex"
+        ],
+      "origin": null,
+      "origin_title": null,
+      "createdAt": "2022-04-30 23:15:41.431236",
+      "content": "All the content of the file",
+      "references": ["link_to", "link_to_2", "etc"],
+      "filepath": "~/.zettel/Bash_find_via_regex[[202204302315]].md"
+    }
+  },
+  "Python":
+  {
+  "202204302315":
+    { 
+      "file_name": "Bash_find_via_regex[[202204302315]]",
+      "uid": "202204302315",
+      "title": "Bash find via regex",
+      "tags": 
+        [
+        "bash", 
+        "script", 
+        "regex"
+        ],
+      "origin": "Bash",
+      "origin_title": "Bash",
+      "createdAt": "2022-04-30 23:15:41.431236",
+      "content": "All the content of the file",
+      "references": ["link_to", "link_to_2", "etc"]
+    },
+  "202204304444":
+    {
+      "file_name": "Item 2[[202204304444]]",
+      "uid": "202204304444",
+      "title": "Item 2",
+      "tags": 
+        [
+        "bash", 
+        "script", 
+        "regex"
+        ],
+      "origin": null,
+      "origin_title": null,
+      "createdAt": "2022-04-30 23:15:41.431236",
+      "content": "All the content of the file",
+      "references": ["link_to", "link_to_2", "etc"]
     }
   }
-]
+}

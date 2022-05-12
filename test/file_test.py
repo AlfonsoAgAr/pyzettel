@@ -20,7 +20,8 @@ class FilesTest(unittest.TestCase):
         with open(FileHandler.verify_path() + 'file_to_read.md', 'r') as file:
             self.assertEqual(file.read(), 'Text to write...')
            
-    def test_modify_file(self) -> bool: ...
+    def test_remove_refers_links(self) -> bool: ...
+    def test_update_parent_files(self) -> bool: ...
             
     def test_delete_file(self) -> bool:
         # Delete the markdown created above.

@@ -1,20 +1,20 @@
 from src import MarkdownNote
 
 data = {
-    'title': '',
+    'title': 'Counting numbers on files directory',
     'tags': ['bash', 'python', 'html']
     }
-
-data['title'] = 'Counting numbers of files on directory'
 
 test = MarkdownNote()
 test.set_attributes(**data)
 
+
 print(test)
 print(test.create_markdown())
+print('\n\n'+test.createdAt)
 print(test.filename)
+# print(test.tags)
 print(test.__dict__)
-
 # DONE
 # Escribir el test.create_markdown() en un archivo markdown. Los tags deberian verificar si existe un markdown padre.
 # Para este ejemplo, deberían existir los archivos Python.md, Bash.md y Html.md.

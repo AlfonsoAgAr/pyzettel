@@ -60,6 +60,24 @@ class Note:
                 setattr(self, i, kwargs[i])
 
 class MarkdownNote(Note, MD):
+    """
+    Class that represents a Note as Markdown File.
+    Use this class to create a new Structured Note.
+    
+    Methods:\n
+        :: h1('Title') -> '# Title' ::\n
+        :: h2('Title') -> '## Title' ::
+        :: h3('Title') -> '### Title' ::
+        :: bold('Title') -> '**Title**' ::
+        :: italic('Title') -> '*Title*' ::
+        :: quote('Title') -> '>Title' ::
+        :: code('Title') -> '```Some Code```' ::
+        :: h_rule('Title') -> '---Some Content---' ::
+        :: link('Title', 'google.com') -> '[Title](google.com)' ::
+        :: footnotes('Title') -> '[^1]: [Title](google.com)' ::
+        
+        :: create_markdown -> return the note structured as str::
+    """
     def __init__(self) -> None: super().__init__()
     def __repr__(self) -> str: return f'<{self.title} [[{self.uid}]]>'
     def h1(self, text_to: str) -> str: return f'# {text_to}\n\n'.format(text_to)
@@ -78,7 +96,7 @@ class MarkdownNote(Note, MD):
         + self.h_rule(
         'Title: ' + self.title + '\n' +
         'UID: ' + self.link(self.uid, '') + '\n' +
-        'Tags: ' + str([self.link('#'+ self.tags[i], '') for i in range(len(self.tags))]).replace("'",'').replace(',','')[1:-1] + '\n' +
+        'Tags: ' + str([self.link('#'+ self.tags[i], self.tags[i].capitalize() + '.md') for i in range(len(self.tags))]).replace("'",'').replace(',','')[1:-1] + '\n' +
         'Origin UID:  ' + self.link('', '') + '\n' +
         'Origin Title: ' + self.link('', '') + '\n' +
         'Date: ' + self.italic(self.createdAt)
