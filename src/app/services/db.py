@@ -1,4 +1,5 @@
-import os, json, pickle, re
+import os, json, re
+from itertools import chain
 from typing import Optional
 
 filepath = os.path.expanduser('~/.zettel/')
@@ -44,6 +45,9 @@ class Constructor(NoteStore):
                          self.raw_note['references'],
                          self.raw_note['filepath'])
 
+    def __repr__(self) -> str:
+        return f'Constructor from <{self.file_name}>'
+
     @classmethod
     def parse_note(self, filename: str) -> object:
         note = {
@@ -77,23 +81,64 @@ class Constructor(NoteStore):
 class DataBase:
     # Essentially a dictionary built from a json file.
     """
-    ...
+    JSON file for record all notes.
     """
 
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
 
-    def upload(self): ...
+        self.db: dict = {}
 
-    def remove(self): ...
+        if '.zetteldb.json' in os.listdir(filepath):
+            with open(filepath + '.zetteldb.json', 'r') as f:
+                self.db = json.load(f)
+        else:
+            self.create()
+            with open(filepath + '.zetteldb.json', 'r') as f:
+                self.db = json.load(f)
 
-    def update(self): ...
+    def create(self) -> None:
+        notes = [Constructor(file) for file in os.listdir(filepath) if file[0].islower()]
+        acumulative_tags = [note.tags for note in notes]
+        list_tags = list(set(chain(*acumulative_tags)))
+        list_tags = [tag.capitalize() for tag in list_tags]
+        tag_dict = dict.fromkeys(list_tags, {})
 
-    def get(self): ...
+        with open(filepath + '.zetteldb.json', 'w+') as f:
+            json.dump(tag_dict, f, indent=4, separators=(',', ' : '))
 
-    def search(self): ...
+    def update(self) -> None:
+        """
+        Add all elements to a Json file in the .zettel directory.
+        If an element was removed, this function doesn't delet the key from the json.
+        Saves everything.
+        """
+        notes = [Constructor(file) for file in os.listdir(filepath) if file[0].islower()]
+        for parent in self.db:
+            for note in notes:
+                if parent.lower() in note.tags:
+                    uid = {note.uid:
+                            {
+                                'file_name':note.file_name,
+                                'uid': note.uid,
+                                'title': note.title,
+                                'tags': note.tags,
+                                'origin': parent,
+                                'origin_title': parent,
+                                'createdAt': note.createdAt,
+                                'content': note.content,
+                                'references': None,
+                                'filepath': filepath + note.file_name
+                            }}
+                    self.db[parent].update(uid)
+        with open(filepath + '.zetteldb.json', 'r+') as f:
+            json.dump(self.db, f, indent=4, separators=(',', ' : '))
 
-# a.x = 'hola'
-# a.y = 'mundo'
+    def search(self) -> dict: ...
 
-a = Constructor('moving_files_with_mv_command_202205081411.md')
-print(a.raw_note)
+#a = Constructor('moving_files_with_mv_command_202205081411.md')
+#print(a.raw_note)
+#print(os.listdir(filepath))
+#test = DataBase()
+#print(test)
+#print(test.update())
+# DataBase().update() ----> Converts all data from .zettel to jsonn format

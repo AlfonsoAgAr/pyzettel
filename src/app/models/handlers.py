@@ -72,14 +72,14 @@ class FileHandler(PathHandler):
         parents_files = itertools.filterfalse(lambda x: x[:1].islower(), files)
         parents_files = [i for i in parents_files]
         k = 0
-        
+
         for parent in parents_files:
             files_asociated = []
             with open(FileHandler.verify_path() + f'{parent}', 'r') as file:
                 for i in file.read().splitlines():
                     if i.find('.md') != -1:
                         files_asociated.append(i[:i.find('.md')+3])
-            
+
             for file in files_asociated:
                 parents_in_file = []
                 try:
@@ -142,4 +142,3 @@ class FileHandler(PathHandler):
 # FileHandler.add_parent('moving_files_with_mv_command_202205081411.md')
 # print(FileHandler.push_changes())
 # FileHandler.push_changes()
-
